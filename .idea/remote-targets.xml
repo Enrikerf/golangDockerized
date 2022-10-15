@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="RemoteTargetsManager">
-    <option name="projectDefaultTargetUuid" value="de68a4fe-310e-4c91-b111-e486549cbef0" />
+    <option name="projectDefaultTargetUuid" value="15a0e28b-14c5-4581-bf2f-968bed3508f6" />
     <targets>
       <target name="golang:1.16.3" type="docker" uuid="94a6ffa0-350d-4658-894e-cd23bb5c8376">
         <config>
@@ -48,6 +48,70 @@
                 </option>
               </VolumeState>
             </option>
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="golang:1.16.2" type="docker" uuid="15a0e28b-14c5-4581-bf2f-968bed3508f6">
+        <config>
+          <option name="targetPlatform">
+            <TargetPlatform />
+          </option>
+          <option name="buildImageConfig">
+            <BuildImageConfig>
+              <option name="builtImageTag" value="golang:1.16.2" />
+              <option name="dockerFile" value="Dockerfile" />
+              <option name="rebuildEveryTime" value="false" />
+            </BuildImageConfig>
+          </option>
+          <option name="containerConfig">
+            <ContainerConfig>
+              <option name="runCliOptions" value="--rm -p 8000:8000 --name app" />
+            </ContainerConfig>
+          </option>
+        </config>
+        <ContributedStateBase type="GoLanguageRuntime">
+          <config>
+            <option name="compiledExecutablesVolume">
+              <VolumeState>
+                <option name="targetSpecificBits">
+                  <map>
+                    <entry key="mountAsVolume" value="false" />
+                  </map>
+                </option>
+              </VolumeState>
+            </option>
+            <option name="goPath" value="/go" />
+            <option name="goRoot" value="/go/bin/go" />
+            <option name="goVersion" value="OCI runtime exec failed: exec failed: unable to start container process: exec: &quot;/usr/local/go/bin/go&quot;: stat /usr/local/go/bin/go: no such file or directory: unknown" />
+            <option name="projectSourcesVolume">
+              <VolumeState>
+                <option name="targetSpecificBits">
+                  <map>
+                    <entry key="mountAsVolume" value="false" />
+                  </map>
+                </option>
+              </VolumeState>
+            </option>
+          </config>
+        </ContributedStateBase>
+      </target>
+      <target name="go" type="docker-compose" uuid="f7067a5e-84e5-4839-8baf-b915137c2dff">
+        <config>
+          <option name="targetPlatform">
+            <TargetPlatform />
+          </option>
+          <option name="configurationFiles">
+            <list>
+              <option value="$PROJECT_DIR$/docker-compose.yml" />
+            </list>
+          </option>
+          <option name="serviceName" value="go" />
+        </config>
+        <ContributedStateBase type="GoLanguageRuntime">
+          <config>
+            <option name="goPath" value="/go" />
+            <option name="goRoot" value="/go/bin/go" />
+            <option name="goVersion" value="go1.16.2 linux/amd64" />
           </config>
         </ContributedStateBase>
       </target>

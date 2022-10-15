@@ -11,3 +11,4 @@ ENV GOPATH /go
 ENV PATH $PATH:/go/bin:$GOPATH/bin
 # If you enable this, then gcc is needed to debug your app
 ENV CGO_ENABLED 0
+

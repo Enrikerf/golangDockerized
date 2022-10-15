@@ -10,6 +10,8 @@ import (
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	myOs, myArch := runtime.GOOS, runtime.GOARCH
 	inContainer := "inside"
+	_, _ = fmt.Fprintf(w, "hello")
+	_, _ = fmt.Fprintf(w, "hello3")
 	if _, err := os.Lstat("/.dockerenv"); err != nil && os.IsNotExist(err) {
 		inContainer = "outside"
 	}
@@ -22,8 +24,8 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", homeHandler)
-	err := http.ListenAndServe(":38000", nil)
+	http.HandleFunc("/d", homeHandler)
+	err := http.ListenAndServe(":8000", nil)
 	if err != nil {
 		fmt.Printf("hello %s\n", runtime.Version())
 	}
