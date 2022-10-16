@@ -10,6 +10,8 @@ import (
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	myOs, myArch := runtime.GOOS, runtime.GOARCH
 	inContainer := "inside"
+	_, _ = fmt.Fprintf(w, "hello")
+	_, _ = fmt.Fprintf(w, "hello6")
 	if _, err := os.Lstat("/.dockerenv"); err != nil && os.IsNotExist(err) {
 		inContainer = "outside"
 	}
