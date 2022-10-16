@@ -3,7 +3,7 @@
   <component name="RemoteTargetsManager">
     <option name="projectDefaultTargetUuid" value="15a0e28b-14c5-4581-bf2f-968bed3508f6" />
     <targets>
-      <target name="golang:1.16.3" type="docker" uuid="94a6ffa0-350d-4658-894e-cd23bb5c8376">
+      <target name="Pulled golang:1.16.3" type="docker" uuid="94a6ffa0-350d-4658-894e-cd23bb5c8376">
         <config>
           <option name="targetPlatform">
             <TargetPlatform />
@@ -51,7 +51,7 @@
           </config>
         </ContributedStateBase>
       </target>
-      <target name="golang:1.16.2" type="docker" uuid="15a0e28b-14c5-4581-bf2f-968bed3508f6">
+      <target name="Builded golang:1.16.2" type="docker" uuid="15a0e28b-14c5-4581-bf2f-968bed3508f6">
         <config>
           <option name="targetPlatform">
             <TargetPlatform />
@@ -105,7 +105,7 @@
               <option value="$PROJECT_DIR$/docker-compose.yml" />
             </list>
           </option>
-          <option name="serviceName" value="go" />
+          <option name="serviceName" value="&lt;Select service&gt;" />
         </config>
         <ContributedStateBase type="GoLanguageRuntime">
           <config>
