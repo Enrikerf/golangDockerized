@@ -1,13 +1,23 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-	"os"
-	"runtime"
+	"prove1/Application/Port/In/Task/CreateTask"
+	"prove1/Config"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
+func main() {
+	app := Config.NewApp()
+	app.GetSdkFacade().TaskSdk.CreateTask(CreateTask.Command{
+		Host:              "",
+		Port:              "",
+		Sentences:         nil,
+		CommunicationMode: "UNARY",
+		Status:            "PENDING",
+		ExecutionMode:     "MANUAL",
+	})
+}
+
+/*func homeHandler(w http.ResponseWriter, r *http.Request) {
 	myOs, myArch := runtime.GOOS, runtime.GOARCH
 	inContainer := "inside"
 	_, _ = fmt.Fprintf(w, "hello")
@@ -30,3 +40,4 @@ func main() {
 		fmt.Printf("hello %s\n", runtime.Version())
 	}
 }
+*/

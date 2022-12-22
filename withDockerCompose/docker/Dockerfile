@@ -18,13 +18,15 @@ FROM compiler AS dev
 
 WORKDIR /app
 EXPOSE 8000 40000
-RUN apt update && apt install -y curl vim fish \
+RUN apt update && apt install -y curl vim fish sudo git \
     && groupadd -g 1000 docker-user \
     && useradd -d /home/docker-user -s /bin/bash -u 1000 -g 1000 docker-user \
+    && usermod -aG sudo docker-user && echo "docker-user:1234" | sudo chpasswd \
     && mkdir /home/docker-user \
     && chown -R docker-user:docker-user /home/docker-user \
     && go install github.com/go-delve/delve/cmd/dlv@latest \
-    && ls -s /go/bin/dlv /usr/local/bin
+    && ls -s /go/bin/dlv /usr/local/bin \
+    && chown -R docker-user:docker-user /go
 
 FROM compiler AS compile
 

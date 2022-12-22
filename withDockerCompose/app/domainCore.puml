@@ -1,0 +1,27 @@
+@startuml
+legend
+<u><b>Legend</b></u>
+Render Aggregations: true
+Render Fields: true
+Render Methods: true
+Pritave Aggregations: true
+end legend
+namespace ClassEquivalentExample {
+    interface Class  {
+        + Get() string
+        + Set(newValue string) 
+
+    }
+    class class << (S,Aquamarine) >> {
+        - variable string
+
+        + Get() string
+        + Set(newValue string) 
+
+    }
+}
+
+"ClassEquivalentExample.Class" <|-- "implements""ClassEquivalentExample.class"
+
+
+@enduml

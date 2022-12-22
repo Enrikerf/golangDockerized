@@ -1,0 +1,237 @@
+@startuml
+legend
+<u><b>Legend</b></u>
+Render Aggregations: true
+Render Fields: true
+Render Methods: true
+Pritave Aggregations: true
+end legend
+namespace CommunicationMode {
+    class CommunicationMode.Mode << (T, #FF7700) >>  {
+    }
+    class UnknownError << (S,Aquamarine) >> {
+        - modeString string
+
+        + Error() string
+
+    }
+}
+
+
+
+namespace Config {
+    interface App  {
+        + GetSdkFacade() SdkFacade.Facade
+
+    }
+    class app << (S,Aquamarine) >> {
+        + SdkFacade SdkFacade.Facade
+
+        + GetSdkFacade() SdkFacade.Facade
+
+    }
+}
+
+"Config.App" <|-- "implements""Config.app"
+
+"Config.app""uses" o-- "SdkFacade.Facade"
+
+namespace Core {
+    interface Id  {
+        + GetUUID() uuid.UUID
+        + GetStringValue() string
+
+    }
+    class id << (S,Aquamarine) >> {
+        - uuid uuid.UUID
+
+        + GetUUID() uuid.UUID
+        + GetStringValue() string
+
+    }
+}
+
+"Core.Id" <|-- "implements""Core.id"
+
+"Core.id""uses" o-- "uuid.UUID"
+
+namespace CreateTask {
+    class Command << (S,Aquamarine) >> {
+        + Host string
+        + Port string
+        + Sentences []string
+        + CommunicationMode string
+        + Status string
+        + ExecutionMode string
+
+    }
+    class Service << (S,Aquamarine) >> {
+        + Recorder Task.Recorder
+
+        + Create(command Command) (Task.Task, error)
+
+    }
+    interface UseCase  {
+        + Create(task Command) (Task.Task, error)
+
+    }
+}
+
+"CreateTask.UseCase" <|-- "implements""CreateTask.Service"
+
+"CreateTask.Service""uses" o-- "Task.Recorder"
+
+namespace ExecutionMode {
+    class ExecutionMode.Mode << (T, #FF7700) >>  {
+    }
+    class UnknownError << (S,Aquamarine) >> {
+        - modeString string
+
+        + Error() string
+
+    }
+}
+
+
+
+namespace SdkFacade {
+    class Facade << (S,Aquamarine) >> {
+        + TaskSdk TaskSdk.Sdk
+
+    }
+}
+
+
+"SdkFacade.Facade""uses" o-- "TaskSdk.Sdk"
+
+namespace Status {
+    class Status.Status << (T, #FF7700) >>  {
+    }
+    class UnknownError << (S,Aquamarine) >> {
+        - modeString string
+
+        + Error() string
+
+    }
+}
+
+
+
+namespace Step {
+    interface Step  {
+        + GetUuid() Core.Id
+
+    }
+    interface Vo  {
+        + GetSentence() string
+        + CreateStep(taskId Core.Id) Step
+
+    }
+    class step << (S,Aquamarine) >> {
+        + Uuid Core.Id
+        + TaskUuid Core.Id
+        + Sentence string
+
+        + GetUuid() Core.Id
+
+    }
+    class vo << (S,Aquamarine) >> {
+        + Sentence string
+
+        + GetSentence() string
+        + CreateStep(taskId Core.Id) Step
+
+    }
+}
+
+"Step.Step" <|-- "implements""Step.step"
+"Step.Vo" <|-- "implements""Step.vo"
+
+"Step.step""uses" o-- "Core.Id"
+
+namespace Task {
+    interface Finder  {
+        + Find(id Core.Id) Task
+
+    }
+    interface Recorder  {
+        + Persist(task Task) 
+
+    }
+    interface Task  {
+        + GetStatus() Status.Status
+        + GetSteps() []Step.Step
+
+    }
+    class task << (S,Aquamarine) >> {
+        - uuid Core.Id
+        - host string
+        - port string
+        - steps []Step.Step
+        - communicationMode CommunicationMode.Mode
+        - status Status.Status
+        - executionMode ExecutionMode.Mode
+
+        + GetStatus() Status.Status
+        + GetSteps() []Step.Step
+
+    }
+}
+
+"Task.Task" <|-- "implements""Task.task"
+
+"Task.task""uses" o-- "CommunicationMode.Mode"
+"Task.task""uses" o-- "Core.Id"
+"Task.task""uses" o-- "ExecutionMode.Mode"
+"Task.task""uses" o-- "Status.Status"
+"Task.task""uses" o-- "Step.Step"
+
+namespace TaskAdapters {
+    interface Finder  {
+    }
+    interface Recorder  {
+        + Persist(task Task.Task) 
+
+    }
+    class finder << (S,Aquamarine) >> {
+        + Orm *gorm.DB
+
+        + Find(id Core.Id) Task.Task
+
+    }
+    class recorder << (S,Aquamarine) >> {
+        + Orm *gorm.DB
+
+        + Persist(task Task.Task) 
+
+    }
+}
+
+"Task.Finder" <|-- "implements""TaskAdapters.finder"
+"Task.Recorder" <|-- "implements""TaskAdapters.recorder"
+"TaskAdapters.Recorder" <|-- "implements""TaskAdapters.recorder"
+
+"TaskAdapters.finder""uses" o-- "gorm.DB"
+"TaskAdapters.recorder""uses" o-- "gorm.DB"
+
+namespace TaskSdk {
+    interface Sdk  {
+        + CreateTask(command CreateTask.Command) 
+
+    }
+    class sdk << (S,Aquamarine) >> {
+        - createTaskUseCase CreateTask.UseCase
+
+        + CreateTask(command CreateTask.Command) 
+
+    }
+}
+
+"TaskSdk.Sdk" <|-- "implements""TaskSdk.sdk"
+
+"TaskSdk.sdk""uses" o-- "CreateTask.UseCase"
+
+"__builtin__.string" #.. "alias of""CommunicationMode.Mode"
+"__builtin__.string" #.. "alias of""ExecutionMode.Mode"
+"__builtin__.string" #.. "alias of""Status.Status"
+@enduml

@@ -1,0 +1,35 @@
+@startuml
+package Application{
+    namespace CreateTask{
+
+    }
+}
+package Domain as P1{
+    package Task as P2{
+
+        interface Finder  {
+
+        }
+        interface Recorder  {
+
+        }
+        interface Task  {
+
+        }
+        class task << (S,Aquamarine) >> {
+        }
+
+        namespace CommunicationMode{
+
+                class Mode << (T, #FF7700) >>  {}
+
+                class UnknownError << (S,Aquamarine) >> {}
+        }
+
+    }
+}
+
+Domain --> Application
+
+CreateTask --> Task.task
+@enduml
